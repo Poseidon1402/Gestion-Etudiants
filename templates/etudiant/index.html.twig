@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EtudiantController!{% endblock %}
+
+{% block body %}
+    {% for student in students %}
+        {{ student.nom }}
+        {{ student.prenoms }}
+        {{ student.adresse }}
+        {{ student.sexe }}
+        {{ student.niveau.nom }}        
+    {% endfor %}
+{% endblock %}

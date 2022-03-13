@@ -28,15 +28,15 @@ class Etudiant
     #[ORM\Column(type: 'string', length: 10)]
     private $sexe;
 
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
-    private $notes;
-
     #[ORM\ManyToOne(targetEntity: Niveau::class, inversedBy: 'etudiants')]
     #[ORM\JoinColumn(nullable: false)]
     private $niveau;
 
     #[ORM\Column(type: 'date')]
     private $annee;
+
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
+    private $notes;
 
     public function __construct()
     {
