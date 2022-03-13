@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Etudiant;
+use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EtudiantController extends AbstractController
 {
-    #[Route('/etudiant', name: 'app_etudiant_list', methods: ['GET'])]
+    #[Route('/etudiant', name: 'app_etudiant_liste', methods: ['GET'])]
     public function index(EtudiantRepository $rep): Response
     {
         $students = $rep->findBy([], ['nom' => 'ASC']);
@@ -17,9 +21,25 @@ class EtudiantController extends AbstractController
         return $this->render('etudiant/index.html.twig', compact('students'));
     }
     
-    #[Route('/etudiant/add', name: 'app_etudiant_add')]
-    public function create(EtudiantRepository $rep): Response
+    #[Route('/etudiant/ajouter', name: 'app_etudiant_ajouter', methods: ['POST'])]
+    public function create(EntityManagerInterface $em, Request $req): Response
     {
-        return $this->render('etudiant/index.html.twig', compact('students'));
+        $student = new Etudiant;
+        
+        $form = $this->createForm(EtudiantType::class, $student);
+        $form->handleRequest($req);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($student);
+            $em->flush();
+
+            $this->addFlash('success', "L'étudiant a été ajouté avec succès !");
+
+            return $this->redirectToRoute('app_etudiant_liste');
+        }
+        
+        return $this->render('etudiant/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
