@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NiveauRepository::class)]
+#[ORM\Table(name: 'NIVEAU')]
 class Niveau
 {
     #[ORM\Id]
