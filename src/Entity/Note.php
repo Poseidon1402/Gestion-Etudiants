@@ -15,11 +15,11 @@ class Note
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'numeroInscription')]
     private $etudiant;
 
     #[ORM\ManyToOne(targetEntity: Matiere::class, inversedBy: 'notes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'codemat')]
     private $matiere;
 
     #[ORM\ManyToOne(targetEntity: Niveau::class, inversedBy: 'notes')]
