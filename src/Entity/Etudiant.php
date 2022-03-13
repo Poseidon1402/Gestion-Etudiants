@@ -35,7 +35,7 @@ class Etudiant
     #[ORM\JoinColumn(nullable: false)]
     private $niveau;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'string', length: 4)]
     private $annee;
 
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
@@ -44,6 +44,7 @@ class Etudiant
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->annee = date("Y");
     }
 
     public function getNumeroInscription(): ?int
@@ -141,16 +142,9 @@ class Etudiant
         return $this;
     }
 
-    public function getAnnee(): ?\DateTimeInterface
+    public function getAnnee(): ?string
     {
         return $this->annee;
-    }
-
-    public function setAnnee(\DateTimeInterface $annee): self
-    {
-        $this->annee = $annee;
-
-        return $this;
     }
 
     public function getEmail(): ?string
