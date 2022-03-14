@@ -21,7 +21,7 @@ class EtudiantController extends AbstractController
         return $this->render('etudiant/index.html.twig', compact('students'));
     }
     
-    #[Route('/etudiant/ajouter', name: 'app_etudiant_ajouter', methods: ['POST'])]
+    #[Route('/etudiant/ajouter', name: 'app_etudiant_ajouter', methods: ['GET','POST'])]
     public function create(EntityManagerInterface $em, Request $req): Response
     {
         $student = new Etudiant;
