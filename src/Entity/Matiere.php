@@ -25,6 +25,10 @@ class Matiere
     #[ORM\OneToMany(mappedBy: 'matiere', targetEntity: Note::class)]
     private $notes;
 
+    #[ORM\ManyToOne(targetEntity: Niveau::class, inversedBy: 'matieres')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $niveau;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -85,6 +89,18 @@ class Matiere
                 $note->setMatiere(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNiveau(): ?Niveau
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?Niveau $niveau): self
+    {
+        $this->niveau = $niveau;
 
         return $this;
     }

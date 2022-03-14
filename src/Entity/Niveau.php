@@ -25,10 +25,14 @@ class Niveau
     #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: Note::class, orphanRemoval: true)]
     private $notes;
 
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: Matiere::class, orphanRemoval: true)]
+    private $matieres;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->matieres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +106,36 @@ class Niveau
             // set the owning side to null (unless already changed)
             if ($note->getNiveau() === $this) {
                 $note->setNiveau(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matiere>
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matiere $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres[] = $matiere;
+            $matiere->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(Matiere $matiere): self
+    {
+        if ($this->matieres->removeElement($matiere)) {
+            // set the owning side to null (unless already changed)
+            if ($matiere->getNiveau() === $this) {
+                $matiere->setNiveau(null);
             }
         }
 
