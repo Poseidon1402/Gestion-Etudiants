@@ -8,6 +8,16 @@
         {{ student.prenoms }}
         {{ student.adresse }}
         {{ student.sexe }}
-        {{ student.niveau.nom }}        
+        {{ student.niveau.nom }}
+        <button class="btn btn-primary m-1" title="Supprimer {{ student.nom }}">
+            <a href="#" class="text-decoration-none" onclick="event.preventDefault();
+            confirm('Êtes vous sûr de vouloir supprimer l'étudiant {{ student.nom }} {{ student.prenom }} portant le numéro {{ student.numeroInscription }} ?') && 
+            document.getElementById('js-student-delete-form_{{ student.numeroInscription }}').submit();">Supprimer</a>
+        </button>
+
+        <form id='js-student-delete-form_{{ student.numeroInscription }}' action="{{ path('app_etudiant_suppr', { id:student.numeroInscription }) }}" method="post" style="display: none;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token('student_deletion_'~student.numeroInscription) }}">
+            <input type="hidden" name="_method" value="DELETE">
+        </form>        
     {% endfor %}
 {% endblock %}

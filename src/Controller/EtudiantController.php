@@ -67,12 +67,12 @@ class EtudiantController extends AbstractController
     #[Route('/etudiant/supprimer/{id}', name: 'app_etudiant_suppr', methods: ['DELETE'])]
     public function delete(Etudiant $student, Request $req, EntityManagerInterface $em): Response
     {
-        if($this->isCsrfTokenValid('etudiant_'.$student->getNumeroInscription(), $req->query->get('csrf_token'))){
+        if($this->isCsrfTokenValid('student_deletion_'.$student->getNumeroInscription(), $req->request->get('csrf_token'))){
             $em->remove($student);
             $em->flush();
             
             $this->addFlash('success', "L'étudiant ".$student->getNom().' '.$student->getPrenoms().' a été supprimé avec succès !');
-            
+
             return $this->redirectToRoute('app_etudiant_liste');
         }
     }
