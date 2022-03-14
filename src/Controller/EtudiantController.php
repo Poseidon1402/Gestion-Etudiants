@@ -42,4 +42,23 @@ class EtudiantController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/etudiant/modifier/{id}', name: 'app_etudiant_liste', methods: ['GET'])]
+    public function modify(Etudiant $student, Request $req, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(EtudiantType::class, $student);
+        $form->handleRequest($req);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+
+            $this->addFlash('success', "L'étudiant ".$student->getNom().' '.$student->getPrenoms()." a été modifié avec succès !");
+
+            return $this->redirectToRoute('app_etudiant_liste');
+        }
+        
+        return $this->render('etudiant/modify.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
