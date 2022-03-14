@@ -43,10 +43,12 @@ class EtudiantController extends AbstractController
         ]);
     }
 
-    #[Route('/etudiant/modifier/{id}', name: 'app_etudiant_liste', methods: ['GET'])]
+    #[Route('/etudiant/modifier/{id}', name: 'app_etudiant_modifier', methods: ['GET', 'PUT'])]
     public function modify(Etudiant $student, Request $req, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(EtudiantType::class, $student);
+        $form = $this->createForm(EtudiantType::class, $student, [
+            'method' => 'PUT'
+        ]);
         $form->handleRequest($req);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -60,5 +62,18 @@ class EtudiantController extends AbstractController
         return $this->render('etudiant/modify.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/etudiant/supprimer/{id}', name: 'app_etudiant_suppr', methods: ['DELETE'])]
+    public function delete(Etudiant $student, Request $req, EntityManagerInterface $em): Response
+    {
+        if($this->isCsrfTokenValid('etudiant_'.$student->getNumeroInscription(), $req->query->get('csrf_token'))){
+            $em->remove($student);
+            $em->flush();
+            
+            $this->addFlash('success', "L'étudiant ".$student->getNom().' '.$student->getPrenoms().' a été supprimé avec succès !');
+            
+            return $this->redirectToRoute('app_etudiant_liste');
+        }
     }
 }
