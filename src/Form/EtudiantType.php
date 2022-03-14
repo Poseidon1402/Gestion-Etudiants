@@ -19,21 +19,27 @@ class EtudiantType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
-                'placeholder' => "Nom de l'étudiant",
+                'attr' => [
+                    'placeholder' => 'Nom de l\'étudiant'
+                ],
                 'constraints' => [
                     new NotBlank([], message: "Ce champ ne pourrait pas être vide")
                 ]
             ])
             ->add('prenoms', TextType::class, [
                 'label' => 'Prénoms',
-                'placeholder' => "Prénoms de l'étudiant",
+                'attr' => [
+                    'placeholder' => 'Prénoms de l\'étudiant',
+                ],
                 'constraints' => [
                     new NotBlank([], message: "Ce champ ne pourrait pas être vide")
                 ]
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
-                'placeholder' => "Domicile",
+                'attr' => [
+                    'placeholder' => 'Domicile'
+                ],
                 'constraints' => [
                     new NotBlank([], message: "Ce champ ne pourrait pas être vide")
                 ]
