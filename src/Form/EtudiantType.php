@@ -66,9 +66,6 @@ class EtudiantType extends AbstractType
                 'class' => Niveau::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'choisissez un niveau',
-                'attr' => [
-                    'readOnly' => true
-                ],
                 'constraints' => [
                     new NotBlank([], message: "Ce champ ne pourrait pas être vide")
                 ]
