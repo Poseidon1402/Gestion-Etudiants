@@ -34,6 +34,11 @@ class Matiere
         $this->notes = new ArrayCollection();
     }
 
+    public function getCodemat(): ?int
+    {
+        return $this->codemat;
+    }
+
     public function getMatiere(): ?int
     {
         return $this->codemat;

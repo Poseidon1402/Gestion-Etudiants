@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Liste des étudiants'%}
+
+{% block body %}
+    {% for subject in subjects %}
+        {{ subject.libelle }}
+        {{ subject.coefficient }}
+        {{ subject.niveau.nom }}
+        <button class="btn btn-primary m-1" title="Supprimer {{ subject.nom }}">
+            <a href="#" class="text-decoration-none" onclick="event.preventDefault();
+            confirm('Êtes vous sûr de vouloir supprimer la matière {{ subject.libelle }} du niveau {{ subject.libelle }} ?') && 
+            document.getElementById('js-subject-delete-form_{{ subject.codemat }}').submit();">Supprimer</a>
+        </button>
+
+        <form id='js-subject-delete-form_{{ subject.codemat }}' action="{{ path('app_matiere_suppr', { id:subject.numeroInscription }) }}" method="post" style="display: none;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token('subject_deletion_'~subject.codemat) }}">
+            <input type="hidden" name="_method" value="DELETE">
+        </form>        
+    {% endfor %}
+{% endblock %}
