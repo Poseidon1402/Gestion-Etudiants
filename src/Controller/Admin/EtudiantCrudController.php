@@ -10,6 +10,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EtudiantCrudController extends AbstractCrudController
 {
@@ -26,16 +28,55 @@ class EtudiantCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
-            TextField::new('prenoms'),
-            EmailField::new('email'),
-            TextField::new('adresse'),
-            ChoiceField::new('sexe')->setChoices([
-                'Masculin' => 'Masculin',
-                'Feminin' => 'Feminin'
-            ]),
-            TextField::new('annee'),
-            AssociationField::new('niveau')
+            TextField::new('nom', 'Nom')
+                ->setFormTypeOptions([
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank(null, message: "Ce champ ne pourrait pas être vide"),
+                    ]
+                ]),
+            TextField::new('prenoms', 'Prénoms')
+                ->setFormTypeOptions([
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank(null, message: "Ce champ ne pourrait pas être vide"),
+                    ]
+                ]),
+            EmailField::new('email', 'Email')
+                ->setFormTypeOptions([
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank(null, message: "Ce champ ne pourrait pas être vide"),
+                        new Email(null, message: "Email invalide")
+                    ]
+                ]),
+            TextField::new('adresse')
+                ->setFormTypeOptions([
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank(null, message: "Ce champ ne pourrait pas être vide"),
+                    ]
+                ]),
+            ChoiceField::new('sexe', 'Sexe')
+                ->setFormTypeOptions([
+                    'required' => false
+                ])
+                ->setChoices([
+                    'Masculin' => 'Masculin',
+                    'Feminin' => 'Feminin'
+                ])
+                ->renderExpanded()
+                ->allowMultipleChoices(false),
+            TextField::new('annee', 'Année Universitaire')
+                ->setFormTypeOptions([
+                    'attr' => [
+                        'readOnly' => true
+                    ],
+                    'constraints' => [
+                        new NotBlank(null, message: "Ce champ ne pourrait pas être vide"),
+                    ]
+                ]),
+            AssociationField::new('niveau', 'Classe')
                 ->setFormTypeOptions([
                     'class' => Niveau::class,
                     'choice_label' => 'nom'
