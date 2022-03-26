@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Etudiant;
 use App\Entity\Niveau;
 use App\Repository\EtudiantRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -87,4 +88,10 @@ class EtudiantCrudController extends AbstractCrudController
         ];
     }
     
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('niveau')
+        ;
+    }
 }
