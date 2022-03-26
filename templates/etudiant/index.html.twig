@@ -11,7 +11,7 @@
         {{ student.niveau.nom }}
         <button class="btn btn-primary m-1" title="Supprimer {{ student.nom }}">
             <a href="#" class="text-decoration-none" onclick="event.preventDefault();
-            confirm('Êtes vous sûr de vouloir supprimer l'étudiant {{ student.nom }} {{ student.prenom }} portant le numéro {{ student.numeroInscription }} ?') && 
+            confirm('Êtes vous sûr de vouloir supprimer l'étudiant {{ student.nom }} {{ student.prenoms }} portant le numéro {{ student.numeroInscription }} ?') && 
             document.getElementById('js-student-delete-form_{{ student.numeroInscription }}').submit();">Supprimer</a>
         </button>
 
