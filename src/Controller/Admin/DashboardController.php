@@ -31,12 +31,14 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Gestion Des Etudiants')
+            ->setTitle('<b>Gestion Des Etudiants</b>')
         ;
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Etudiants');
+        yield MenuItem::subMenu('<b>Etudiants</b>', 'fa fa-home')->setSubItems([
+            MenuItem::linkToCrud('Liste des Etudiants', 'fa-solid fa-graduation-cap', Etudiant::class)
+        ]);
     }
 }
