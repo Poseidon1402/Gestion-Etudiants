@@ -14,7 +14,7 @@ class Etudiant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $numeroInscription;
+    private $numero_inscription;
 
     #[ORM\Column(type: 'string', length: 25)]
     private $nom;
@@ -47,9 +47,14 @@ class Etudiant
         $this->annee = date("Y");
     }
 
+    public function __toString()
+    {
+        return $this->getNumeroInscription();
+    }
+    
     public function getNumeroInscription(): ?int
     {
-        return $this->numeroInscription;
+        return $this->numero_inscription;
     }
 
     public function getNom(): ?string
