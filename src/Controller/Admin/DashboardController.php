@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\EtudiantController;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -38,7 +39,8 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::subMenu('<b>Etudiants</b>', 'fa fa-home')->setSubItems([
-            MenuItem::linkToCrud('Liste des Etudiants', 'fa-solid fa-graduation-cap', Etudiant::class)
+            MenuItem::linkToCrud('Liste des Etudiants', 'fa-solid fa-graduation-cap', Etudiant::class),
+            MenuItem::linkToCrud('Matières', '', Matiere::class),
         ]);
     }
 }
